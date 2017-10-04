@@ -8,6 +8,7 @@ import (
 
 const (
 	defaultVarcharSize   = 191
+	defaultCharSize      = 2
 	defaultVarbinarySize = 767
 	autoIncrement        = "AUTO_INCREMENT"
 )
@@ -87,6 +88,8 @@ func (mysql MySQL) ToSQL(typeName string, size uint64) string {
 		return "DOUBLE"
 	case "string", "*string", "sql.NullString":
 		return varchar(size)
+	case "char":
+		return char(size)
 	case "[]uint8", "sql.RawBytes":
 		return varbinary(size)
 	case "bool":
@@ -101,6 +104,8 @@ func (mysql MySQL) ToSQL(typeName string, size uint64) string {
 		return "MEDIUMBLOB"
 	case "longblob":
 		return "LONGBLOB"
+	case "date":
+		return "DATE"
 	case "time":
 		return "TIME"
 	case "time.Time":
@@ -212,6 +217,14 @@ func varchar(size uint64) string {
 	}
 
 	return fmt.Sprintf("VARCHAR(%d)", size)
+}
+
+func char(size uint64) string {
+	if size == 0 {
+		return fmt.Sprintf("CHAR(%d)", defaultCharSize)
+	}
+
+	return fmt.Sprintf("CHAR(%d)", size)
 }
 
 func varbinary(size uint64) string {

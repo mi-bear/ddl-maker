@@ -43,6 +43,11 @@ func TestToSQL(t *testing.T) {
 		t.Fatalf("error %s to sql %s. but result %s", "sql.NullString", fmt.Sprintf("VARCHAR(%d)", size), m.ToSQL("sql.NullString", size))
 	}
 
+	size = uint64(2)
+	if m.ToSQL("sql.NullString", size) != fmt.Sprintf("CHAR(%d)", size) {
+		t.Fatalf("error %s to sql %s. but result %s", "sql.NullString", fmt.Sprintf("CHAR(%d)", size), m.ToSQL("sql.NullString", size))
+	}
+
 	if m.ToSQL("[]uint8", size) != fmt.Sprintf("VARBINARY(%d)", size) {
 		t.Fatalf("error %s to sql %s. but result %s", "[]uint8", fmt.Sprintf("VARBINARY(%d)", size), m.ToSQL("[]uint8", size))
 	}
@@ -53,6 +58,10 @@ func TestToSQL(t *testing.T) {
 
 	if m.ToSQL("text", 0) != "TEXT" {
 		t.Fatalf("error %s to sql %s. but result %s", "text", "TEXT", m.ToSQL("text", 0))
+	}
+
+	if m.ToSQL("date", 0) != "DATE" {
+		t.Fatalf("error %s to sql %s. but result %s", "date", "DATE", m.ToSQL("date", 0))
 	}
 
 	if m.ToSQL("time", 0) != "TIME" {
