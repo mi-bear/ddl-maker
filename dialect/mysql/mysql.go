@@ -70,7 +70,7 @@ func (mysql MySQL) ToSQL(typeName string, size uint64) string {
 		return "TINYINT"
 	case "int16":
 		return "SMALLINT"
-	case "int32":
+	case "int32", "sql.NullInt64":
 		return "INTEGER"
 	case "int64":
 		return "BIGINT"
@@ -84,7 +84,7 @@ func (mysql MySQL) ToSQL(typeName string, size uint64) string {
 		return "BIGINT unsigned"
 	case "float32":
 		return "FLOAT"
-	case "float64":
+	case "float64", "sql.NullFloat64":
 		return "DOUBLE"
 	case "string", "*string", "sql.NullString":
 		return varchar(size)

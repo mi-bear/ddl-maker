@@ -12,6 +12,7 @@ func TestToSQL(t *testing.T) {
 	args["int8"] = "TINYINT"
 	args["int16"] = "SMALLINT"
 	args["int32"] = "INTEGER"
+	args["sql.NullInt64"] = "INTEGER"
 	args["int64"] = "BIGINT"
 	args["uint8"] = "TINYINT unsigned"
 	args["uint16"] = "SMALLINT unsigned"
